@@ -47,7 +47,6 @@ export const columns: ColumnDef<Loan>[] = [
 		accessorKey: "interestPerDay",
 		header: "Int/Day",
 		cell: ({ row }) => {
-			console.log(row.original.interestRate)
 			const interestRate = row.original.interestRate;
 			const principle = row.original.principle;
 			const interestPerDay = ( (interestRate / 100) / 365) * principle;
