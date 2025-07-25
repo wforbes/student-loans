@@ -3,7 +3,7 @@ import { BaseRepository } from "@/db/infra/repositories/BaseRepository";
 import { DrizzleDB } from "@/db/infra/providers/ClientProvider";
 import { ClientProvider } from "@/db/infra/providers/ClientProvider";
 import { sql, count, eq, and } from "drizzle-orm";
-import { usersTable } from "@/db/drizzle/schema";
+import { users as usersTable } from "@/db/drizzle/schema";
 import { User } from "@/db/zodSchemas";
 import { verifySession } from "@/app/_lib/session";
 

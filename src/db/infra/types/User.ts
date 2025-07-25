@@ -6,7 +6,6 @@ import {
 
 export const SelectUserSchema = createSelectSchema(usersTable);
 export type SelectUser = z.infer<typeof SelectUserSchema>;
-
 export const InsertUserSchema = createInsertSchema(usersTable)
 	.omit({
 		id: true,
