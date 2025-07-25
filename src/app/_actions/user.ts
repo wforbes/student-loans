@@ -1,6 +1,6 @@
 'use server';
 
-import { verifySession } from "@/app/_lib/session";
+import { verifySession } from "@/lib/session";
 import { cache } from 'react';
 import { RepositoryFactory } from "@/db/infra/repositories/RepositoryFactory";
 

@@ -2,10 +2,10 @@ import { IUserRepository } from "@/db/infra/interfaces/IUserRepository";
 import { BaseRepository } from "@/db/infra/repositories/BaseRepository";
 import { DrizzleDB } from "@/db/infra/providers/ClientProvider";
 import { ClientProvider } from "@/db/infra/providers/ClientProvider";
-import { sql, count, eq, and } from "drizzle-orm";
+import { sql, count, eq, and, or } from "drizzle-orm";
 import { users as usersTable } from "@/db/drizzle/schema";
 import { User } from "@/db/zodSchemas";
-import { verifySession } from "@/app/_lib/session";
+import { verifySession } from "@/lib/session";
 
 export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRepository {
 	constructor() {
@@ -18,6 +18,29 @@ export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRe
 				.from(usersTable)
 				.where(eq(sql`lower(${usersTable.email})`, email.toLowerCase()));
 			return result[0]?.value > 0;
+		} catch (error) {
+			this.handleError(error);
+		}
+	}
+
+	async existsByUsername(username: string): Promise<boolean> {
+		try {
+			const result = await this.client.select({ value: count() })
+				.from(usersTable)
+				.where(eq(usersTable.username, username));
+			return result[0]?.value > 0;
+		} catch (error) {
+			this.handleError(error);
+		}
+	}
+
+	async create(user: User): Promise<User> {
+		try {
+			const result = await this.client.insert(usersTable)
+				.values(user)
+				.returning();
+			if (result.length === 0) throw new Error('Failed to create user');
+			return result[0] as User;
 		} catch (error) {
 			this.handleError(error);
 		}

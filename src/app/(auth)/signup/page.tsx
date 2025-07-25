@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { appTitle } from "@/app/_constants";
 import CenterLayout from "../_components/CenterLayout";
+import SignupForm from "./SignupForm";
 
 export default function SignupPage() {
 	return (
@@ -22,7 +23,7 @@ export default function SignupPage() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent>
-					<p>(TODO: SignupForm)</p>
+					<SignupForm />
 				</CardContent>
 			</Card>
 			<div className="text-center text-sm text-muted-foreground">
