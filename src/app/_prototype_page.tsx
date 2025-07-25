@@ -17,6 +17,7 @@ import LoanTable from "@/components/LoanTable"
 import { formatCurrency } from "@/lib/utils"
 import LoanDialog, { FormSchema } from "@/components/LoanDialog"
 import ExtraPaymentDialog, { Payment, FormSchema as ExtraPaymentFormSchema } from "@/components/ExtraPaymentDialog"
+import { appTitle } from "./_constants"
 
 
 export default function Home() {
@@ -110,7 +111,7 @@ export default function Home() {
 				<Card>
 					<CardHeader>
 						<CardTitle className="text-2xl font-bold flex flex-row justify-between items-center">
-							Student Loans
+							{appTitle}
 							<div className="flex justify-end">
 
 							</div>
