@@ -1,6 +1,6 @@
 "use client";
 
-import { appTitle, MESSAGES } from "@/app/_constants";
+import { appTitle, AUTH_ERRORS } from "@/app/_constants";
 import { Routes, isPublicRoute } from "@/app/_constants/Routes";
 import { Button } from "@/components/ui/button";
 import { Home, Loader2 } from "lucide-react";
@@ -26,11 +26,11 @@ export default function Navbar({ homeRoute }: { homeRoute: string }) {
 			}
 			// todo: add logging service
 			// log(res.message)
-			console.error(`[@Navbar.handleSignOut] ${MESSAGES.SIGN_OUT_ERROR}: ${res.message}`);
+			console.error(`[@Navbar.handleSignOut] ${AUTH_ERRORS.SIGN_OUT_FAILED}: ${res.message}`);
 		} catch (error) {
 			// todo: add logging service
 			// log(error)
-			console.error(`[@Navbar.handleSignOut] ${MESSAGES.SIGN_OUT_ERROR}: ${error}`);
+			console.error(`[@Navbar.handleSignOut] ${AUTH_ERRORS.SIGN_OUT_FAILED}: ${error}`);
 		}
 	}
 

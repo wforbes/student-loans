@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { appTitle } from "@/app/_constants";
-import CenterLayout from "../_components/CenterLayout";
+import CenterLayout from "@/app/_components/CenterLayout";
 import SignupForm from "./SignupForm";
 
 export default function SignupPage() {

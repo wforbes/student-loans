@@ -1,11 +1,11 @@
 "use server";
 import "server-only";
-import { SignupFormSchema } from "@/db/authSchemas";
+import { SignupFormSchema } from "@/app/(auth)/_components/authSchemas";
 import { RepositoryFactory } from "@/db/infra/repositories/RepositoryFactory";
 import bcrypt from "bcryptjs";
 import { createSession } from "@/lib/session";
 import { Routes } from "@/app/_constants/Routes";
-import { MESSAGES } from "@/app/_constants";
+import { AUTH_ERRORS } from "@/app/_constants";
 
 type FormState = {
 	success?: boolean;
@@ -17,15 +17,15 @@ export async function signupAction(
 	prevState: FormState,
 	payload: FormData
 ): Promise<FormState> {
-	console.log("payload received", payload);
+	//console.log("payload received", payload);
 	if (!(payload instanceof FormData)) {
 		return {
 			success: false,
-			errors: { error: [MESSAGES.FORM_ERROR] },
+			errors: { error: [AUTH_ERRORS.INVALID_FORM_DATA] },
 		};
 	}
 	const formData = Object.fromEntries(payload);
-	console.log("converted object entries to form data", formData);
+	//console.log("converted object entries to form data", formData);
 
 	const parsed = SignupFormSchema.safeParse(formData);
 
@@ -36,8 +36,8 @@ export async function signupAction(
 		for (const key of Object.keys(formData)) {
 			fields[key] = formData[key].toString();
 		}
-		console.log("error returned data", formData);
-		console.log("error returned error", errors);
+		//console.log("error returned data", formData);
+		//console.log("error returned error", errors);
 		return {
 			success: false,
 			fields,
@@ -50,7 +50,7 @@ export async function signupAction(
 	if (emailTaken) {
 		return {
 			success: false,
-			errors: { email: [MESSAGES.EMAIL_TAKEN] },
+			errors: { email: [AUTH_ERRORS.EMAIL_TAKEN] },
 			fields: parsed.data,
 		};
 	}
@@ -60,7 +60,7 @@ export async function signupAction(
 	if (usernameTaken) {
 		return {
 			success: false,
-			errors: { username: [MESSAGES.USERNAME_TAKEN] },
+			errors: { username: [AUTH_ERRORS.USERNAME_TAKEN] },
 			fields: parsed.data,
 		};
 	}
@@ -68,12 +68,12 @@ export async function signupAction(
 	if (parsed.data.password !== parsed.data.confirmPassword) {
 		return {
 			success: false,
-			errors: { password: [MESSAGES.PASSWORD_MISMATCH] },
+			errors: { password: [AUTH_ERRORS.PASSWORD_MISMATCH] },
 			fields: parsed.data,
 		};
 	}
 
-	console.log("parsed data", parsed.data);
+	//console.log("parsed data", parsed.data);
 
 	const passedHashword = await bcrypt.hash(parsed.data.password, 10);
 	const user = await RepositoryFactory.getUserRepository()
@@ -86,14 +86,14 @@ export async function signupAction(
 			updated_at: new Date().toISOString(),
 		});
 
-	console.log("user created", user);
+	//console.log("user created", user);
 
 	const session = await createSession(user.id, Routes.protected.dashboard);
 	if (!session?.success) {
-		console.log("failed to create session");
+		//console.log("failed to create session");
 		return {
 			success: false,
-			errors: { error: [MESSAGES.CREATE_SESSION_ERROR] },
+			errors: { error: [AUTH_ERRORS.CREATE_SESSION_FAILED] },
 		};
 	}
 
