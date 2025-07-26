@@ -1,4 +1,10 @@
 export const Routes = {
+	api: {
+		baseUrl: "/api",
+		auth: {
+			verifySession: "/auth/verify-session"
+		}
+	},
 	public: {
 		home: "/",
 		auth: {

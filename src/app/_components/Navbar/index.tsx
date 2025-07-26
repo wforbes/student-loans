@@ -8,19 +8,22 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import axios from "axios";
+import { useSessionQuery } from "@/services/session/queries";
 
 export default function Navbar({ homeRoute }: { homeRoute: string }) {
 	const router = useRouter();
 	const pathname = usePathname();
 
-	const sessionValid = false;
-	const data = {
+	const { data, isLoading, isFetching } = useSessionQuery();
+
+	const { valid: sessionValid } = !data ? { valid: false } : data;
+	/*const data = {
 		user: {
 			email: "test@test.com",
 			firstName: "Test",
 			lastName: "User"
 		}
-	}
+	}*/
 
 	const handleSignOut = async () => {
 		try {
@@ -46,7 +49,7 @@ export default function Navbar({ homeRoute }: { homeRoute: string }) {
 					</nav>
 				</div>
 				<div className="flex gap-2 items-center">
-					{!data ? <Loader2 className="h-6 w-6 animate-spin" /> :
+					{isLoading || isFetching ? <Loader2 className="h-6 w-6 animate-spin" /> :
 						sessionValid ? (
 							<>
 								{isPublicRoute(pathname) && <Button variant="outline" size="icon" className="z-10" onClick={() => router.push(Routes.protected.dashboard)}><Home /></Button>}
