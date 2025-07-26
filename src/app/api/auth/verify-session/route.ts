@@ -12,8 +12,8 @@ export async function POST(request: NextRequest) {
 		if (!session?.userId) {
 			return NextResponse.json({ valid: false });
 		}
-	} catch (error) {
-		console.error(error);
+	} catch (error: unknown) {
+		console.error(error); // todo: set up logging service
 		return NextResponse.json({ valid: false });
 	}
 

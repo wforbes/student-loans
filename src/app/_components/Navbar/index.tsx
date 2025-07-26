@@ -15,15 +15,7 @@ export default function Navbar({ homeRoute }: { homeRoute: string }) {
 	const pathname = usePathname();
 
 	const { data, isLoading, isFetching } = useSessionQuery();
-
 	const { valid: sessionValid } = !data ? { valid: false } : data;
-	/*const data = {
-		user: {
-			email: "test@test.com",
-			firstName: "Test",
-			lastName: "User"
-		}
-	}*/
 
 	const handleSignOut = async () => {
 		try {

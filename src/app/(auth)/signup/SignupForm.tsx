@@ -1,13 +1,8 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { z } from "zod";
 import { useActionState } from "react";
 import { signupAction } from "./actions";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 
 export default function SignupForm() {
@@ -16,8 +11,8 @@ export default function SignupForm() {
 		success: false,
 	});
 
-	console.log("formState", formState);
-	console.log("fields returned: ", { ...(formState?.fields ?? {}) });
+	//console.log("formState", formState);
+	//console.log("fields returned: ", { ...(formState?.fields ?? {}) });
 
 	return (
 		<form action={formAction} className="grid gap-4">
@@ -77,53 +72,5 @@ export default function SignupForm() {
 				<Button type="submit">Sign up</Button>
 			</div>
 		</form>
-	)
-
-	/*
-	const form = useForm<z.infer<typeof SignupFormSchema>>({
-		resolver: zodResolver(SignupFormSchema),
-		defaultValues: {
-			username: "",
-			email: "",
-			password: "",
-			confirmPassword: ""
-		}
-	})
-
-	const onSubmit = (data: SignupFormSchemaType) => {
-		console.log(data);
-	}
-
-	return (
-		<Form {...form}>
-			<form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-				<FormField
-					control={form.control}
-					name="username"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Username</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<FormField
-					control={form.control}
-					name="email"
-					render={({ field }) => (
-						<FormItem>
-							<FormLabel>Email</FormLabel>
-							<FormControl>
-								<Input {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-			</form>
-		</Form>
-	)*/
+	);
 }

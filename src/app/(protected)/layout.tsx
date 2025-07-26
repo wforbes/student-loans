@@ -1,6 +1,6 @@
-import { Routes } from "../_constants/Routes";
-import Navbar from "../_components/Navbar";
-import Footer from "../_components/Footer";
+import { Routes } from "@/app/_constants/Routes";
+import Navbar from "@/app/_components/Navbar";
+import Footer from "@/app/_components/Footer";
 
 export default function ProtectedLayout({ children }: { children: React.ReactNode }) {
 	return (
