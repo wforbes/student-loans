@@ -4,7 +4,7 @@ import { DrizzleDB } from "@/db/infra/providers/ClientProvider";
 import { ClientProvider } from "@/db/infra/providers/ClientProvider";
 import { sql, count, eq, and, or } from "drizzle-orm";
 import { users as usersTable } from "@/db/drizzle/schema";
-import { User } from "@/db/zodSchemas";
+import { User, UserSafeDTO } from "@/db/zodSchemas";
 import { verifySession } from "@/lib/session";
 
 export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRepository {
@@ -46,7 +46,7 @@ export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRe
 		}
 	}
 
-	async getById(id: string): Promise<User | null> {
+	async getById(id: string): Promise<UserSafeDTO | null> {
 		try {
 			const session = await verifySession();
 			if (!session.userId) throw new Error('Unauthorized');
@@ -61,7 +61,18 @@ export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRe
 				.limit(1);
 
 			if (response.length === 0) return null;
-			return response[0] as User;
+			return response[0] as UserSafeDTO;
+		} catch (error) {
+			this.handleError(error);
+		}
+	}
+
+	async getByEmailWithPasshash(email: string): Promise<User | null> {
+		try {
+			const result = await this.client.select()
+				.from(usersTable)
+				.where(eq(usersTable.email, email));
+			return result[0] as User;
 		} catch (error) {
 			this.handleError(error);
 		}

@@ -1,5 +1,6 @@
 'use server-only';
 
+import { Routes } from '@/app/_constants/Routes';
 import { JWTPayload, SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
@@ -38,12 +39,13 @@ export async function decrypt(token: string) {
 	}
 }
 
-export async function createSession(userId: string, redirectTo: string = '/dashboard') {
+export async function createSession(userId: string, redirectTo: string = Routes.protected.dashboard) {
 	const expires = new Date(Date.now() + cookie.duration)
 	const session = await encrypt({ userId, expires })
 	const cookieStore = await cookies()
 	cookieStore.set(cookie.name, session, { ...cookie.options, expires })
 	redirect(redirectTo);
+	return { success: true };
 }
 
 export async function verifySession(): Promise<{ userId?: string, error?: string }> {

@@ -11,3 +11,6 @@ export const users = z.object({
 })
 
 export type User = z.infer<typeof users>
+
+export const UserSafeDTO = users.omit({ passhash: true });
+export type UserSafeDTO = z.infer<typeof UserSafeDTO>;

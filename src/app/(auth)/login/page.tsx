@@ -1,7 +1,8 @@
 import { appTitle } from "@/app/_constants";
 import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import CenterLayout from "../_components/CenterLayout";
+import CenterLayout from "@/app/(auth)/_components/CenterLayout";
+import LoginForm from "./LoginForm";
 
 export default async function LoginPage() {
 	//const { redirect } = await params;
@@ -30,8 +31,7 @@ export default async function LoginPage() {
 							</CardDescription>
 						</CardHeader>
 						<CardContent>
-							{/* <LoginForm redirect={redirect as string} /> */}
-							<p>(TODO: LoginForm)</p>
+							<LoginForm />
 						</CardContent>
 					</Card>
 					<div className="text-center text-sm text-muted-foreground">
