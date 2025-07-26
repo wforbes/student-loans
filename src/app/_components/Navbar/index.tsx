@@ -1,14 +1,14 @@
 "use client";
 
-import { appTitle } from "@/app/_constants";
+import { appTitle, MESSAGES } from "@/app/_constants";
 import { Routes, isPublicRoute } from "@/app/_constants/Routes";
 import { Button } from "@/components/ui/button";
 import { Home, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
-import axios from "axios";
 import { useSessionQuery } from "@/services/session/queries";
+import { signout } from "@/services/session/fetchers";
 
 export default function Navbar({ homeRoute }: { homeRoute: string }) {
 	const router = useRouter();
@@ -19,10 +19,18 @@ export default function Navbar({ homeRoute }: { homeRoute: string }) {
 
 	const handleSignOut = async () => {
 		try {
-			await axios.post('/api/auth/signout');
-			router.push('/login');
+			const res = await signout();
+			if (res.success === true) {
+				router.push(Routes.public.auth.login);
+				return;
+			}
+			// todo: add logging service
+			// log(res.message)
+			console.error(`[@Navbar.handleSignOut] ${MESSAGES.SIGN_OUT_ERROR}: ${res.message}`);
 		} catch (error) {
-			console.error('Failed to sign out:', error);
+			// todo: add logging service
+			// log(error)
+			console.error(`[@Navbar.handleSignOut] ${MESSAGES.SIGN_OUT_ERROR}: ${error}`);
 		}
 	}
 

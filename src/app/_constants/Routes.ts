@@ -2,7 +2,8 @@ export const Routes = {
 	api: {
 		baseUrl: "/api",
 		auth: {
-			verifySession: "/auth/verify-session"
+			verifySession: "/auth/verify-session",
+			signout: "/auth/signout"
 		}
 	},
 	public: {

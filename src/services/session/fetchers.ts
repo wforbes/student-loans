@@ -15,3 +15,12 @@ export const verifySession = async (handleAuthLogout?: () => void) => {
 		);
 	}
 }
+
+export const signout = async () => {
+	try {
+		const res = await api.post(Routes.api.auth.signout);
+		return res.data;
+	} catch (error: unknown) {
+		return handleApiError(error as AxiosError, "Failed to sign out, please try again later.");
+	}
+}
