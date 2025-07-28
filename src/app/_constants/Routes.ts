@@ -4,6 +4,10 @@ export const Routes = {
 		auth: {
 			verifySession: "/auth/verify-session",
 			signout: "/auth/signout"
+		},
+		loans: {
+			get: "/loans",
+			put: "/loans"
 		}
 	},
 	public: {
