@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { getCurrentUser } from "@/app/_actions/user";
+import PrototypeStuff from "@/app/_prototype_page";
 
 export default async function DashboardPage() {
 	const user = await getCurrentUser();
@@ -13,7 +14,7 @@ export default async function DashboardPage() {
 					</CardDescription>
 				</CardHeader>
 				<CardContent className="px-6 mt-0">
-					<p>(TODO: Dashboard)</p>
+					<PrototypeStuff />
 				</CardContent>
 			</Card>
 		</div>
