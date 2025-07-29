@@ -8,6 +8,6 @@ export default defineConfig({
 		url: process.env.DATABASE_URL!,
 	},
 	introspect: {
-		casing: 'preserve',
+		casing: 'camel',
 	}
 });
