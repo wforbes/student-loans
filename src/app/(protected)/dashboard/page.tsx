@@ -2,6 +2,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { getCurrentUser } from "@/app/_actions/user";
 import PrototypeStuff from "@/app/_prototype_page";
 import { formatCurrency } from "@/lib/utils";
+import { Routes } from "@/app/_constants/Routes";
+import Link from "next/link";
 
 export default async function DashboardPage() {
 	const user = await getCurrentUser();
@@ -22,6 +24,9 @@ export default async function DashboardPage() {
 				</CardHeader>
 				<CardContent className="px-6 mt-0">
 					<h1> Quick Links (TODO): Upcoming Payments... Loan Progress... Providers...</h1>
+					<div className="flex flex-row gap-2">
+						<Link href={Routes.protected.loans}>Loans</Link>
+					</div>
 				</CardContent>
 			</Card>
 		</div>

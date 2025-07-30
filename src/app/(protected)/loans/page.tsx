@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { formatCurrency } from "@/lib/utils";
-import LoanDialog from "@/app/(protected)/dashboard/_components/LoanDialog";
+import LoanDialog from "@/app/(protected)/loans/_components/LoanDialog";
+import LoanTable from "@/app/(protected)/loans/_components/LoanTable";
 
 export default async function DashboardPage() {
 	
@@ -20,6 +21,7 @@ export default async function DashboardPage() {
 				</CardHeader>
 				<CardContent className="px-6 mt-0">
 					<LoanDialog />
+					<LoanTable />
 				</CardContent>
 			</Card>
 		</div>

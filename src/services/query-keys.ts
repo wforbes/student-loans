@@ -5,4 +5,7 @@ export const queryKeys = {
 	loans: {
 		all: () => ['loans', 'all'],
 	},
+	servicers: {
+		all: () => ['servicers', 'all'],
+	}
 };

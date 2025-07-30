@@ -8,6 +8,10 @@ export const Routes = {
 		loans: {
 			get: "/loans",
 			put: "/loans"
+		},
+		servicers: {
+			get: "/servicers",
+			put: "/servicers"
 		}
 	},
 	public: {
@@ -18,7 +22,9 @@ export const Routes = {
 		}
 	},
 	protected: {
-		dashboard: "/dashboard"
+		dashboard: "/dashboard",
+		loans: "/loans",
+		servicers: "/servicers"
 	}
 } as const;
 
