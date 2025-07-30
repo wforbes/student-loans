@@ -6,8 +6,8 @@ export const users = z.object({
 	email: z.string().email(),
 	passhash: z.string().min(8).max(100),
 	image: z.string().url().nullable().optional(),
-	created_at: z.string().datetime(),
-	updated_at: z.string().datetime()
+	createdAt: z.string().datetime(),
+	updatedAt: z.string().datetime()
 })
 
 export type User = z.infer<typeof users>

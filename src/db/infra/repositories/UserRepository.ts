@@ -50,7 +50,15 @@ export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRe
 		try {
 			const session = await verifySession();
 			if (!session.userId) throw new Error('Unauthorized');
-			const response = await this.client.select()
+			const response = await this.client.select(
+				{
+					id: usersTable.id,
+					email: usersTable.email,
+					username: usersTable.username,
+					createdAt: usersTable.createdAt,
+					updatedAt: usersTable.updatedAt
+				}
+			)
 				.from(usersTable)
 				.where(
 					and(
@@ -72,6 +80,7 @@ export class UserRepository extends BaseRepository<DrizzleDB> implements IUserRe
 			const result = await this.client.select()
 				.from(usersTable)
 				.where(eq(usersTable.email, email));
+			if (result.length === 0) return null;
 			return result[0] as User;
 		} catch (error) {
 			this.handleError(error);
