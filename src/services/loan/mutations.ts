@@ -38,3 +38,18 @@ export const useEditLoanMutation = () => {
 		},
 	})
 }
+
+export const useDeleteLoanMutation = () => {
+	const queryClient = useQueryClient();
+	const { handleAuthLogout } = useUtilities();
+
+	return useMutation({
+		mutationFn: loansApi.deleteLoan,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: queryKeys.loans.all() });
+		},
+		onError: (error) => {
+			handleApiError(error as AxiosError, "Failed to delete loan, please try again later.", handleAuthLogout);
+		},
+	})
+}

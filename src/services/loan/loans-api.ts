@@ -10,5 +10,9 @@ export const loansApi = {
 	editLoan: async (data: EditLoan) => {
 		const res = await api.put(Routes.api.loans.put, data);
 		return res.data;
+	},
+	deleteLoan: async (id: string) => {
+		const res = await api.delete(Routes.api.loans.delete(id));
+		return res.data;
 	}
 }

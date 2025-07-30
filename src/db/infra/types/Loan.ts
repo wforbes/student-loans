@@ -18,6 +18,7 @@ export type NewLoan = {
 	principle: number;
 	interestRate: number;
 	dateOpened: string;
+	active: boolean;
 }
 
 export type EditLoan = {
@@ -28,6 +29,7 @@ export type EditLoan = {
 	principle: number;
 	interestRate: number;
 	dateOpened: string | null;
+	active: boolean;
 }
 
 export type LoanWithServicer = SelectLoan & {

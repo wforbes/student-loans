@@ -18,7 +18,8 @@ create table
 		nickname varchar(63) not null,
 		principle int not null,
 		interest_rate float8 not null,
-		date_opened date
+		date_opened date,
+		active boolean default true
 	);
 
 create table

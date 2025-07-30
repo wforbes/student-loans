@@ -1,12 +1,7 @@
 "use client";
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ColumnDef, createColumnHelper, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
-
-import { Button } from "@/components/ui/button";
-import { PencilIcon } from "lucide-react";
-import { LoanWithServicer } from "@/db/infra/types/Loan";
-import { useState } from "react";
+import { ColumnDef, flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[]

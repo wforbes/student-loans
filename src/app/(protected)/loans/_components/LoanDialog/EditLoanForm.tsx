@@ -47,7 +47,8 @@ export default function EditLoanForm({ done, editLoan, servicerFormOpen, setServ
 			nickname: data.nickname,
 			principle: parseFloat(data.principle),
 			interestRate: parseFloat(data.interestRate),
-			dateOpened: data.dateOpened
+			dateOpened: data.dateOpened,
+			active: true
 		})
 		done()
 	}

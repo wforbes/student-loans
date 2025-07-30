@@ -1,4 +1,4 @@
-import { pgTable, unique, uuid, varchar, timestamp, foreignKey, integer, doublePrecision, date } from "drizzle-orm/pg-core"
+import { pgTable, unique, uuid, varchar, timestamp, foreignKey, integer, doublePrecision, date, boolean } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 
@@ -35,6 +35,7 @@ export const loans = pgTable("loans", {
 	principle: integer().notNull(),
 	interestRate: doublePrecision("interest_rate").notNull(),
 	dateOpened: date("date_opened"),
+	active: boolean().default(true),
 }, (table) => [
 	foreignKey({
 			columns: [table.userId],

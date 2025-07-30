@@ -48,7 +48,8 @@ export async function PUT(request: NextRequest) {
 			nickname,
 			principle,
 			interestRate,
-			dateOpened: _dateOpened || null
+			dateOpened: _dateOpened || null,
+			active: true
 		});
 		if (!result || !SelectLoanSchema.safeParse(result).success) {
 			return NextResponse.json({ error: "Failed to update loan" }, { status: 500 });

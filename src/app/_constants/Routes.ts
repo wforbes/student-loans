@@ -7,7 +7,8 @@ export const Routes = {
 		},
 		loans: {
 			get: "/loans",
-			put: "/loans"
+			put: "/loans",
+			delete: (id: string) => `/loans/${id}`
 		},
 		servicers: {
 			get: "/servicers",

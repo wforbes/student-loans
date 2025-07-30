@@ -7,17 +7,19 @@ import LoanTable from "@/app/(protected)/loans/_components/LoanTable";
 import { useLoanQuery } from "@/services/loan/queries";
 import { columns } from "@/app/(protected)/loans/_components/LoanTable/columns";
 import { Button } from "@/components/ui/button";
-import { Loader2, PencilIcon } from "lucide-react";
+import { Loader2, PencilIcon, TrashIcon } from "lucide-react";
 import { LoanWithServicer } from "@/db/infra/types/Loan";
 import { createColumnHelper } from "@tanstack/react-table";
 import { useState } from "react";
+import DeleteLoanDialog from "@/app/(protected)/loans/_components/LoanDialog/DeleteLoanDialog";
 
 export default function LoanPageContent() {
 	const { data: loans, isLoading } = useLoanQuery();
 	
 	const [editLoan, setEditLoan] = useState<LoanWithServicer | null>(null);
 	const [editLoanOpen, setEditLoanOpen] = useState(false);
-	
+	const [deleteLoan, setDeleteLoan] = useState<LoanWithServicer | null>(null);
+	const [deleteLoanOpen, setDeleteLoanOpen] = useState(false);
 	// add actions column for the loan table
 	const columnHelper = createColumnHelper<LoanWithServicer>();
 	const displayColumns = [
@@ -28,6 +30,9 @@ export default function LoanPageContent() {
 					<div className="flex">
 						<Button variant="outline" size="icon" onClick={() => handleEdit(row.original)}>
 							<PencilIcon className="w-4 h-4" />
+						</Button>
+						<Button variant="outline" size="icon" onClick={() => handleDelete(row.original)}>
+							<TrashIcon className="w-4 h-4" />
 						</Button>
 					</div>
 				);
@@ -40,9 +45,16 @@ export default function LoanPageContent() {
 		setEditLoan(loan);
 		setEditLoanOpen(true);
 	}
+
+	const handleDelete = (loan: LoanWithServicer) => {
+		setDeleteLoan(loan);
+		setDeleteLoanOpen(true);
+	}
+
 	return (
 		<>
 			<LoanDialog editLoan={editLoan} open={editLoanOpen} setOpen={setEditLoanOpen} />
+			<DeleteLoanDialog loanToDelete={deleteLoan} open={deleteLoanOpen} setOpen={setDeleteLoanOpen} />
 			{/*<EditLoanDialog editLoan={editLoan} open={editLoanOpen} setOpen={setEditLoanOpen} /> */}
 			<div className="mt-4">
 				{

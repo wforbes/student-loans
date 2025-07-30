@@ -13,7 +13,15 @@ export class LoanRepository extends BaseRepository<DrizzleDB> implements ILoanRe
 
 	async getById(id: string): Promise<SelectLoan | null> {
 		try {
-			const result = await this.client.select().from(loansTable).where(eq(loansTable.id, id));
+			const result = await this.client
+				.select().from(loansTable)
+				.where(
+					and(
+						eq(loansTable.id, id),
+						eq(loansTable.active, true)
+					)
+				);
+
 			return result[0] as SelectLoan;
 		} catch (error) {
 			this.handleError(error);
@@ -24,7 +32,7 @@ export class LoanRepository extends BaseRepository<DrizzleDB> implements ILoanRe
 		try {
 			const result = await this.client.select()
 				.from(loansTable)
-				.where(eq(loansTable.userId, userId));
+				.where(and(eq(loansTable.userId, userId), eq(loansTable.active, true)));
 			return result as SelectLoan[];
 		} catch (error) {
 			this.handleError(error);
@@ -48,10 +56,24 @@ export class LoanRepository extends BaseRepository<DrizzleDB> implements ILoanRe
 		try {
 			const result = await this.client
 				.update(loansTable).set(loan)
-				.where(eq(loansTable.id, loan.id))
+				.where(and(eq(loansTable.id, loan.id), eq(loansTable.active, true)))
 				.returning();
 
 			return result[0] as EditLoan;
+		} catch (error) {
+			this.handleError(error);
+		}
+	}
+
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async deleteById(id: string): Promise<any> {
+		try {
+			const result = await this.client
+				.update(loansTable)
+				.set({ active: false })
+				.where(and(eq(loansTable.id, id), eq(loansTable.active, true)))
+				.returning();
+			return result[0];
 		} catch (error) {
 			this.handleError(error);
 		}
