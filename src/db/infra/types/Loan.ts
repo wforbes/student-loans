@@ -19,3 +19,17 @@ export type NewLoan = {
 	interestRate: number;
 	dateOpened: string;
 }
+
+export type EditLoan = {
+	id: string;
+	userId: string;
+	servicerId: string;
+	nickname: string;
+	principle: number;
+	interestRate: number;
+	dateOpened: string | null;
+}
+
+export type LoanWithServicer = SelectLoan & {
+	servicerName: string;
+}

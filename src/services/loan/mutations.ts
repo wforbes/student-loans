@@ -23,3 +23,18 @@ export const useAddLoanMutation = () => {
 		}
 	})
 }
+
+export const useEditLoanMutation = () => {
+	const queryClient = useQueryClient();
+	const { handleAuthLogout } = useUtilities();
+
+	return useMutation({
+		mutationFn: loansApi.editLoan,
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: queryKeys.loans.all() });
+		},
+		onError: (error) => {
+			handleApiError(error as AxiosError, "Failed to edit loan, please try again later.", handleAuthLogout);
+		},
+	})
+}

@@ -9,8 +9,13 @@ export async function GET(request: NextRequest) {
 		return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 	}
 	const loans = await RepositoryFactory.getLoanRepository().getByUserId(user.id);
+	const servicers = await RepositoryFactory.getServicerRepository().getByUserId(user.id);
+	const loansWithServicer = loans.map((loan) => {
+		const servicer = servicers.find((s) => s.id === loan.servicerId);
+		return { ...loan, servicerName: servicer?.name };
+	});
 	
-	return NextResponse.json(loans);
+	return NextResponse.json(loansWithServicer);
 }
 
 export async function PUT(request: NextRequest) {
@@ -29,6 +34,26 @@ export async function PUT(request: NextRequest) {
 	let _dateOpened: string | null = dateOpened;
 	if (!_dateOpened || _dateOpened === "") {
 		_dateOpened = null;
+	}
+
+	if (body.id) {
+		const loan = await RepositoryFactory.getLoanRepository().getById(body.id);
+		if (!loan) {
+			return NextResponse.json({ error: "Loan not found" }, { status: 404 });
+		}
+		const result = await RepositoryFactory.getLoanRepository().update({
+			id: body.id,
+			userId: user.id,
+			servicerId,
+			nickname,
+			principle,
+			interestRate,
+			dateOpened: _dateOpened || null
+		});
+		if (!result || !SelectLoanSchema.safeParse(result).success) {
+			return NextResponse.json({ error: "Failed to update loan" }, { status: 500 });
+		}
+		return NextResponse.json(result);
 	}
 	
 	const loan: InsertLoan = { userId: user.id, servicerId, nickname, principle, interestRate, dateOpened: _dateOpened };
